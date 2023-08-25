@@ -1,0 +1,29 @@
+name: Upgrade Tag and Create New Tag
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  upgrade-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get previous commit's tag
+        run: |
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^)
+          echo "Previous tag: $PREVIOUS_TAG"
+
+      - name: Upgrade tag version
+        run: |
+          # Example: increment version by 1
+          NEW_TAG=$(echo $PREVIOUS_TAG | awk -F. -v OFS=. '{$NF++; print}')
+          echo "New tag: $NEW_TAG"
+
+      - name: Create new tag
+        run: |
+          git tag "$NEW_TAG"
+          git push origin "$NEW_TAG"
