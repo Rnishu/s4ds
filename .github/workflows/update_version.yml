@@ -14,7 +14,7 @@ jobs:
 
       - name: Get previous commit's tag
         run: |
-          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^)
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD)
           echo "Previous tag: $PREVIOUS_TAG"
 
       - name: Upgrade tag version
